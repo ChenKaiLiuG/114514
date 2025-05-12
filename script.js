@@ -13,7 +13,6 @@ let flipState = false;
 const cardFront = document.getElementById('cardContent');
 const cardBack = document.getElementById('cardBackContent');
 const flipCard = document.getElementById('flipCard');
-const flipInner = document.getElementById('flipInner');
 
 function formatCountdown(targetTime) {
   const now = new Date();
@@ -22,7 +21,7 @@ function formatCountdown(targetTime) {
     const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, '0');
     const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
     const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
-    return `還有 ${hours}：${minutes}：${seconds}`;
+    return `倒數 ${hours} ： ${minutes} ： ${seconds}`;
   } else {
     return '哼哼哼～啊啊啊啊啊啊啊啊啊啊啊啊啊～';
   }
@@ -37,11 +36,9 @@ function updateCardContent() {
     cardFront.textContent = content;
   }
 
-  // 播放鈴聲
   const now = new Date();
   if (now >= time && !alarmPlayed[currentIndex]) {
-    const audio = document.getElementById("alarmSound");
-    audio.play().catch(err => console.log("音訊播放失敗：", err));
+    document.getElementById("alarmSound").play().catch(() => {});
     alarmPlayed[currentIndex] = true;
   }
 }
@@ -76,10 +73,10 @@ function toggleAuto() {
 function startAutoFlip() {
   stopAutoFlip();
   flipTimer = setInterval(() => {
+    currentIndex = (currentIndex + 1) % targets.length;
     flipState = !flipState;
     flipCard.classList.toggle('flipped');
     updateCardContent();
-    currentIndex = (currentIndex + 1) % targets.length;
   }, 15000);
 }
 
@@ -88,11 +85,10 @@ function stopAutoFlip() {
   flipTimer = null;
 }
 
-setInterval(updateCardContent, 1000); // 每秒更新倒數
+setInterval(updateCardContent, 1000);
 updateCardContent();
 startAutoFlip();
 
-// 啟用音訊播放權限
 document.addEventListener("click", () => {
   const audio = document.getElementById("alarmSound");
   audio.play().then(() => audio.pause());
