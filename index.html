@@ -8,23 +8,17 @@
 <body>
   <h1>惡臭時間倒數器</h1>
 
-  <div class="flip-card" id="flipCard">
-    <div class="flip-card-inner" id="flipInner">
-      <div class="card-face front">
-        <div class="timer-line" id="labelFront">載入中...</div>
-        <div class="timer-line" id="countdownFront">--：--：--</div>
-      </div>
-      <div class="card-face back">
-        <div class="timer-line" id="labelBack">載入中...</div>
-        <div class="timer-line" id="countdownBack">--：--：--</div>
-      </div>
+  <div class="card-container">
+    <div class="card" id="card">
+      <div class="card-face front" id="timer-front">載入中...</div>
+      <div class="card-face back" id="timer-back">載入中...</div>
     </div>
   </div>
 
   <div class="controls">
-    <button class="glass-btn" onclick="rotateCard(-1)">←</button>
-    <button class="glass-btn" onclick="toggleAuto()" id="toggleBtn">暫停自動切換</button>
-    <button class="glass-btn" onclick="rotateCard(1)">→</button>
+    <button onclick="prev()">←</button>
+    <button onclick="toggleAuto()" id="toggleBtn">暫停自動切換</button>
+    <button onclick="next()">→</button>
   </div>
 
   <audio id="alarmSound" src="ring.mp3" preload="auto"></audio>
