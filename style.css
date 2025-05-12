@@ -57,7 +57,7 @@ body {
   text-align: center;
   padding: 20px;
   box-sizing: border-box;
-  white-space: pre-line;
+  white-space: pre-wrap;
 }
 
 .flip-card-back {
