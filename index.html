@@ -3,30 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <title>惡臭時間倒數器</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      margin-top: 50px;
-      background: #fff;
-    }
-    .timer {
-      font-size: 114px;
-      margin: 20px;
-    }
-    .controls {
-      margin-top: 30px;
-    }
-    button {
-      font-size: 24px;
-      padding: 10px 30px;
-      margin: 0 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>惡臭時間倒數器</h1>
-  <div class="timer" id="timer">載入中...</div>
+
+  <div class="timer-card">
+    <div class="timer-line" id="label">載入中...</div>
+    <div class="timer-line" id="countdown">--：--：--</div>
+  </div>
 
   <div class="controls">
     <button onclick="prev()">←</button>
@@ -48,19 +33,26 @@
     let switchIntervalId = null;
     const alarmPlayed = [false, false, false];
 
+    function pad(n) {
+      return n.toString().padStart(2, '0');
+    }
+
     function updateTimer() {
       const now = new Date();
       const { label, time } = targets[currentIndex];
-      const timerEl = document.getElementById("timer");
       const diff = time - now;
+      const labelEl = document.getElementById("label");
+      const countdownEl = document.getElementById("countdown");
+
+      labelEl.textContent = label;
 
       if (diff > 0) {
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        timerEl.textContent = `${label} 還有 ${hours} 小時 ${minutes} 分 ${seconds} 秒`;
+        const hours = pad(Math.floor(diff / (1000 * 60 * 60)));
+        const minutes = pad(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
+        const seconds = pad(Math.floor((diff % (1000 * 60)) / 1000));
+        countdownEl.textContent = `還有 ${hours}：${minutes}：${seconds}`;
       } else {
-        timerEl.textContent = `${label} 哼哼哼～啊啊啊啊啊啊啊啊啊啊啊啊啊～`;
+        countdownEl.textContent = `哼哼哼～啊啊啊啊啊啊啊啊啊啊啊啊啊～`;
         if (!alarmPlayed[currentIndex]) {
           document.getElementById("alarmSound").play().catch(err => {
             console.log("音訊播放失敗：", err);
@@ -84,10 +76,10 @@
       autoSwitch = !autoSwitch;
       const btn = document.getElementById("toggleBtn");
       if (autoSwitch) {
-        btn.textContent = "釘選倒數目標";
+        btn.textContent = "暫停自動切換";
         startAutoSwitch();
       } else {
-        btn.textContent = "自動切換";
+        btn.textContent = "繼續自動切換";
         stopAutoSwitch();
       }
     }
@@ -111,9 +103,9 @@
       audio.play().then(() => audio.pause());
     }, { once: true });
 
-    setInterval(updateTimer, 1000);  // 每秒更新倒數
-    startAutoSwitch();              // 預設啟用自動切換
-    updateTimer();                  // 初始顯示
+    setInterval(updateTimer, 1000);
+    startAutoSwitch();
+    updateTimer();
   </script>
 </body>
 </html>
