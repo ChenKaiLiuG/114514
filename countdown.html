@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>倒數計時與鈴聲</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    .timer { font-size: 24px; margin: 20px; }
+  </style>
+</head>
+<body>
+  <h1>距離 2025/05/14 指定時間倒數</h1>
+  <div class="timer" id="timer0">00:00:00 倒數中...</div>
+  <div class="timer" id="timer1">11:45:14 倒數中...</div>
+  <div class="timer" id="timer2">23:45:14 倒數中...</div>
+
+  <audio id="alarmSound" src="ring.mp3" preload="auto"></audio>
+
+  <script>
+    const targets = [
+      new Date('2025-05-14T00:00:00+08:00'),
+      new Date('2025-05-14T11:45:14+08:00'),
+      new Date('2025-05-14T23:45:14+08:00')
+    ];
+
+    const alarmPlayed = [false, false, false];
+
+    function updateTimers() {
+      const now = new Date();
+      targets.forEach((target, i) => {
+        const diff = target - now;
+        const timerEl = document.getElementById(`timer${i}`);
+        if (diff > 0) {
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          timerEl.textContent = `${target.toTimeString().substring(0,8)} 還有 ${hours} 小時 ${minutes} 分 ${seconds} 秒`;
+        } else {
+          timerEl.textContent = `${target.toTimeString().substring(0,8)} 時間已到！`;
+          if (!alarmPlayed[i]) {
+            document.getElementById("alarmSound").play().catch(err => {
+              console.log("音訊播放失敗：", err);
+            });
+            alarmPlayed[i] = true;
+          }
+        }
+      });
+    }
+
+    // 要求使用者互動來啟用音訊播放
+    document.addEventListener("click", () => {
+      const audio = document.getElementById("alarmSound");
+      audio.play().then(() => audio.pause());
+    }, { once: true });
+
+    setInterval(updateTimers, 1000);
+  </script>
+</body>
+</html>
