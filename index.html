@@ -8,15 +8,15 @@
 <body>
   <h1>惡臭時間倒數器</h1>
 
-  <div class="timer-card">
+  <div class="timer-card" id="timerCard">
     <div class="timer-line" id="label">載入中...</div>
     <div class="timer-line" id="countdown">--：--：--</div>
   </div>
 
   <div class="controls">
-    <button onclick="prev()">←</button>
-    <button onclick="toggleAuto()" id="toggleBtn">釘選倒數目標</button>
-    <button onclick="next()">→</button>
+    <button class="glass-btn" onclick="rotateCard(-1)">←</button>
+    <button class="glass-btn" onclick="toggleAuto()" id="toggleBtn">釘選倒數目標</button>
+    <button class="glass-btn" onclick="rotateCard(1)">→</button>
   </div>
 
   <audio id="alarmSound" src="ring.mp3" preload="auto"></audio>
@@ -40,12 +40,12 @@
     function updateTimer() {
       const now = new Date();
       const { label, time } = targets[currentIndex];
-      const diff = time - now;
       const labelEl = document.getElementById("label");
       const countdownEl = document.getElementById("countdown");
 
       labelEl.textContent = label;
 
+      const diff = time - now;
       if (diff > 0) {
         const hours = pad(Math.floor(diff / (1000 * 60 * 60)));
         const minutes = pad(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
@@ -62,14 +62,16 @@
       }
     }
 
-    function prev() {
-      currentIndex = (currentIndex + targets.length - 1) % targets.length;
-      updateTimer();
-    }
-
-    function next() {
-      currentIndex = (currentIndex + 1) % targets.length;
-      updateTimer();
+    function rotateCard(direction) {
+      const card = document.getElementById("timerCard");
+      card.classList.add("rotate");
+      card.style.transform = `rotateY(${direction * 20}deg)`;
+      setTimeout(() => {
+        card.classList.remove("rotate");
+        card.style.transform = "";
+        currentIndex = (currentIndex + targets.length + direction) % targets.length;
+        updateTimer();
+      }, 300);
     }
 
     function toggleAuto() {
@@ -86,7 +88,7 @@
 
     function startAutoSwitch() {
       if (!switchIntervalId) {
-        switchIntervalId = setInterval(next, 10000);
+        switchIntervalId = setInterval(() => rotateCard(1), 10000);
       }
     }
 
@@ -97,7 +99,6 @@
       }
     }
 
-    // 啟用音訊播放權限
     document.addEventListener("click", () => {
       const audio = document.getElementById("alarmSound");
       audio.play().then(() => audio.pause());
