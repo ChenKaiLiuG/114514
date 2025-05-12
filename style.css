@@ -1,53 +1,60 @@
 body {
-  font-family: sans-serif;
   background-color: #1a1a1a;
-  color: white;
-  text-align: center;
   margin: 0;
-}
-
-h1 {
-  margin-top: 40px;
-  font-size: 36px;
+  padding: 0;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .card-container {
-  perspective: 1000px;
+  perspective: 1200px;
   width: 400px;
   height: 400px;
-  margin: 50px auto;
 }
 
-.card {
+.flip-card {
   width: 100%;
   height: 100%;
   position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.8s;
 }
 
-.card.flip {
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 1s ease-in-out;
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
   transform: rotateY(180deg);
 }
 
-.card-face {
+.card {
   position: absolute;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden;
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-              url('yjsp.jpg') center/cover no-repeat;
-  border-radius: 20px;
+  background: url('yjsp.jpg') center/cover no-repeat;
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  font-size: 36px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  backdrop-filter: brightness(0.8);
 }
 
-.card-face.back {
+.flip-card-back {
   transform: rotateY(180deg);
 }
 
@@ -55,14 +62,18 @@ h1 {
   margin-top: 30px;
 }
 
-button {
+.btn {
   font-size: 20px;
-  padding: 10px 30px;
+  padding: 10px 25px;
   margin: 0 10px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  color: #fff;
+  background-color: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   cursor: pointer;
-  backdrop-filter: blur(4px);
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background-color: rgba(255,255,255,0.2);
 }
