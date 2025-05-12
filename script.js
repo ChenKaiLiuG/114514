@@ -5,46 +5,60 @@ const targets = [
 ];
 
 let currentIndex = 0;
-let showingFront = true;
 let autoSwitch = true;
 let switchIntervalId = null;
 const alarmPlayed = [false, false, false];
+let isFront = true;
 
-function pad(n) {
-  return n.toString().padStart(2, '0');
+function formatTime(hours, minutes, seconds) {
+  return `${hours.toString().padStart(2, '0')}：${minutes.toString().padStart(2, '0')}：${seconds.toString().padStart(2, '0')}`;
 }
 
-function updateTimer() {
+function updateTimerContent(target, index) {
   const now = new Date();
-  const { label, time } = targets[currentIndex];
-  const diff = time - now;
+  const diff = target.time - now;
 
-  let text;
   if (diff > 0) {
-    const hours = pad(Math.floor(diff / (1000 * 60 * 60)));
-    const minutes = pad(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
-    const seconds = pad(Math.floor((diff % (1000 * 60)) / 1000));
-    text = `還有 ${hours}：${minutes}：${seconds}`;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    return `${target.label}<br>還有 ${formatTime(hours, minutes, seconds)}`;
   } else {
-    text = `哼哼哼～啊啊啊啊啊啊啊啊啊啊啊啊啊～`;
-    if (!alarmPlayed[currentIndex]) {
+    if (!alarmPlayed[index]) {
       document.getElementById("alarmSound").play().catch(err => {
         console.log("音訊播放失敗：", err);
       });
-      alarmPlayed[currentIndex] = true;
+      alarmPlayed[index] = true;
     }
+    return `${target.label}<br>哼哼哼～啊啊啊啊啊啊啊啊啊啊啊啊啊～`;
   }
-
-  const nextFace = showingFront ? "Back" : "Front";
-  document.getElementById("label" + nextFace).textContent = targets[currentIndex].label;
-  document.getElementById("countdown" + nextFace).textContent = text;
 }
 
-function rotateCard(direction) {
-  currentIndex = (currentIndex + targets.length + direction) % targets.length;
-  showingFront = !showingFront;
-  const flipCard = document.getElementById("flipCard");
-  flipCard.classList.toggle("show-back");
+function updateTimer() {
+  const card = document.getElementById("card");
+  const front = document.getElementById("timer-front");
+  const back = document.getElementById("timer-back");
+
+  const content = updateTimerContent(targets[currentIndex], currentIndex);
+
+  if (isFront) {
+    back.innerHTML = content;
+    card.classList.add('flip');
+  } else {
+    front.innerHTML = content;
+    card.classList.remove('flip');
+  }
+
+  isFront = !isFront;
+}
+
+function prev() {
+  currentIndex = (currentIndex + targets.length - 1) % targets.length;
+  updateTimer();
+}
+
+function next() {
+  currentIndex = (currentIndex + 1) % targets.length;
   updateTimer();
 }
 
@@ -62,7 +76,9 @@ function toggleAuto() {
 
 function startAutoSwitch() {
   if (!switchIntervalId) {
-    switchIntervalId = setInterval(() => rotateCard(1), 10000);
+    switchIntervalId = setInterval(() => {
+      next();
+    }, 10000);
   }
 }
 
@@ -73,13 +89,11 @@ function stopAutoSwitch() {
   }
 }
 
-// 啟用音訊播放權限
 document.addEventListener("click", () => {
   const audio = document.getElementById("alarmSound");
   audio.play().then(() => audio.pause());
 }, { once: true });
 
-// 初始化
-setInterval(updateTimer, 1000);
+setInterval(updateTimer, 1000); // 每秒更新時間
 startAutoSwitch();
 updateTimer();
