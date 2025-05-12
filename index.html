@@ -8,105 +8,27 @@
 <body>
   <h1>惡臭時間倒數器</h1>
 
-  <div class="timer-card" id="timerCard">
-    <div class="timer-line" id="label">載入中...</div>
-    <div class="timer-line" id="countdown">--：--：--</div>
+  <div class="flip-card" id="flipCard">
+    <div class="flip-card-inner" id="flipInner">
+      <div class="card-face front">
+        <div class="timer-line" id="labelFront">載入中...</div>
+        <div class="timer-line" id="countdownFront">--：--：--</div>
+      </div>
+      <div class="card-face back">
+        <div class="timer-line" id="labelBack">載入中...</div>
+        <div class="timer-line" id="countdownBack">--：--：--</div>
+      </div>
+    </div>
   </div>
 
   <div class="controls">
     <button class="glass-btn" onclick="rotateCard(-1)">←</button>
-    <button class="glass-btn" onclick="toggleAuto()" id="toggleBtn">釘選倒數目標</button>
+    <button class="glass-btn" onclick="toggleAuto()" id="toggleBtn">暫停自動切換</button>
     <button class="glass-btn" onclick="rotateCard(1)">→</button>
   </div>
 
   <audio id="alarmSound" src="ring.mp3" preload="auto"></audio>
 
-  <script>
-    const targets = [
-      { label: '114/5/14', time: new Date('2025-05-14T00:00:00+08:00') },
-      { label: '上午11:45:14', time: new Date('2025-05-14T11:45:14+08:00') },
-      { label: '下午11:45:14', time: new Date('2025-05-14T23:45:14+08:00') }
-    ];
-
-    let currentIndex = 0;
-    let autoSwitch = true;
-    let switchIntervalId = null;
-    const alarmPlayed = [false, false, false];
-
-    function pad(n) {
-      return n.toString().padStart(2, '0');
-    }
-
-    function updateTimer() {
-      const now = new Date();
-      const { label, time } = targets[currentIndex];
-      const labelEl = document.getElementById("label");
-      const countdownEl = document.getElementById("countdown");
-
-      labelEl.textContent = label;
-
-      const diff = time - now;
-      if (diff > 0) {
-        const hours = pad(Math.floor(diff / (1000 * 60 * 60)));
-        const minutes = pad(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
-        const seconds = pad(Math.floor((diff % (1000 * 60)) / 1000));
-        countdownEl.textContent = `還有 ${hours}：${minutes}：${seconds}`;
-      } else {
-        countdownEl.textContent = `哼哼哼～啊啊啊啊啊啊啊啊啊啊啊啊啊～`;
-        if (!alarmPlayed[currentIndex]) {
-          document.getElementById("alarmSound").play().catch(err => {
-            console.log("音訊播放失敗：", err);
-          });
-          alarmPlayed[currentIndex] = true;
-        }
-      }
-    }
-
-    function rotateCard(direction) {
-      const card = document.getElementById("timerCard");
-      card.classList.add("rotate");
-      card.style.transform = `rotateY(${direction * 20}deg)`;
-      setTimeout(() => {
-        card.classList.remove("rotate");
-        card.style.transform = "";
-        currentIndex = (currentIndex + targets.length + direction) % targets.length;
-        updateTimer();
-      }, 300);
-    }
-
-    function toggleAuto() {
-      autoSwitch = !autoSwitch;
-      const btn = document.getElementById("toggleBtn");
-      if (autoSwitch) {
-        btn.textContent = "暫停自動切換";
-        startAutoSwitch();
-      } else {
-        btn.textContent = "繼續自動切換";
-        stopAutoSwitch();
-      }
-    }
-
-    function startAutoSwitch() {
-      if (!switchIntervalId) {
-        switchIntervalId = setInterval(() => rotateCard(1), 10000);
-      }
-    }
-
-    function stopAutoSwitch() {
-      if (switchIntervalId) {
-        clearInterval(switchIntervalId);
-        switchIntervalId = null;
-      }
-    }
-
-    document.addEventListener("click", () => {
-      const audio = document.getElementById("alarmSound");
-      audio.play().then(() => audio.pause());
-    }, { once: true });
-
-    setInterval(updateTimer, 1000);
-    startAutoSwitch();
-    updateTimer();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
