@@ -3,18 +3,18 @@ body {
   margin: 0;
   padding: 0;
   text-align: center;
-  background: radial-gradient(ellipse at center, #1c1c1c 0%, #000000 100%);
+  background-color: black;
   color: #fff;
+  background-image: url('background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   padding-top: 60px;
-  background-image: linear-gradient(to bottom, rgba(30,0,0,0.8), rgba(0,0,0,0.9)), url('yjsp.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
 }
 
 h1 {
@@ -23,9 +23,28 @@ h1 {
   text-shadow: 2px 2px 8px #000;
 }
 
-.timer-card {
+.flip-card {
   width: 320px;
   height: 320px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.flip-card.show-back .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
@@ -34,7 +53,11 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: transform 0.3s ease;
+  backface-visibility: hidden;
+}
+
+.card-face.back {
+  transform: rotateY(180deg);
 }
 
 .timer-line {
@@ -67,8 +90,4 @@ button.glass-btn:hover {
 
 button.glass-btn:active {
   transform: scale(0.95);
-}
-
-.rotate {
-  transform: rotateY(20deg);
 }
