@@ -4,56 +4,116 @@
   <meta charset="UTF-8" />
   <title>惡臭時間倒數器</title>
   <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
-    .timer { font-size: 114px; margin: 20px; }
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background: #fff;
+    }
+    .timer {
+      font-size: 72px;
+      margin: 20px;
+    }
+    .controls {
+      margin-top: 30px;
+    }
+    button {
+      font-size: 24px;
+      padding: 10px 30px;
+      margin: 0 10px;
+    }
   </style>
 </head>
 <body>
   <h1>惡臭時間倒數器</h1>
-  <div class="timer" id="timer0">114/5/14 倒數中...</div>
-  <div class="timer" id="timer1">11:45:14 倒數中...</div>
-  <div class="timer" id="timer2">23:45:14 倒數中...</div>
+  <div class="timer" id="timer">載入中...</div>
+
+  <div class="controls">
+    <button onclick="prev()">←</button>
+    <button onclick="toggleAuto()" id="toggleBtn">暫停自動切換</button>
+    <button onclick="next()">→</button>
+  </div>
 
   <audio id="alarmSound" src="ring.mp3" preload="auto"></audio>
 
   <script>
     const targets = [
-      new Date('2025-05-14T00:00:00+08:00'),
-      new Date('2025-05-14T11:45:14+08:00'),
-      new Date('2025-05-14T23:45:14+08:00')
+      { label: '114/5/14', time: new Date('2025-05-14T00:00:00+08:00') },
+      { label: '11:45:14', time: new Date('2025-05-14T11:45:14+08:00') },
+      { label: '23:45:14', time: new Date('2025-05-14T23:45:14+08:00') }
     ];
 
+    let currentIndex = 0;
+    let autoSwitch = true;
+    let switchIntervalId = null;
     const alarmPlayed = [false, false, false];
 
-    function updateTimers() {
+    function updateTimer() {
       const now = new Date();
-      targets.forEach((target, i) => {
-        const diff = target - now;
-        const timerEl = document.getElementById(`timer${i}`);
-        if (diff > 0) {
-          const hours = Math.floor(diff / (1000 * 60 * 60));
-          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-          timerEl.textContent = `${target.toTimeString().substring(0,8)} 還有 ${hours} 小時 ${minutes} 分 ${seconds} 秒`;
-        } else {
-          timerEl.textContent = `${target.toTimeString().substring(0,8)} 時間已到！`;
-          if (!alarmPlayed[i]) {
-            document.getElementById("alarmSound").play().catch(err => {
-              console.log("音訊播放失敗：", err);
-            });
-            alarmPlayed[i] = true;
-          }
+      const { label, time } = targets[currentIndex];
+      const timerEl = document.getElementById("timer");
+      const diff = time - now;
+
+      if (diff > 0) {
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        timerEl.textContent = `${label} 還有 ${hours} 小時 ${minutes} 分 ${seconds} 秒`;
+      } else {
+        timerEl.textContent = `${label} 時間已到！`;
+        if (!alarmPlayed[currentIndex]) {
+          document.getElementById("alarmSound").play().catch(err => {
+            console.log("音訊播放失敗：", err);
+          });
+          alarmPlayed[currentIndex] = true;
         }
-      });
+      }
     }
 
-    // 要求使用者互動來啟用音訊播放
+    function prev() {
+      currentIndex = (currentIndex + targets.length - 1) % targets.length;
+      updateTimer();
+    }
+
+    function next() {
+      currentIndex = (currentIndex + 1) % targets.length;
+      updateTimer();
+    }
+
+    function toggleAuto() {
+      autoSwitch = !autoSwitch;
+      const btn = document.getElementById("toggleBtn");
+      if (autoSwitch) {
+        btn.textContent = "暫停自動切換";
+        startAutoSwitch();
+      } else {
+        btn.textContent = "繼續自動切換";
+        stopAutoSwitch();
+      }
+    }
+
+    function startAutoSwitch() {
+      if (!switchIntervalId) {
+        switchIntervalId = setInterval(next, 10000);
+      }
+    }
+
+    function stopAutoSwitch() {
+      if (switchIntervalId) {
+        clearInterval(switchIntervalId);
+        switchIntervalId = null;
+      }
+    }
+
+    // 啟用音訊播放權限
     document.addEventListener("click", () => {
       const audio = document.getElementById("alarmSound");
       audio.play().then(() => audio.pause());
     }, { once: true });
 
-    setInterval(updateTimers, 1000);
+    setInterval(updateTimer, 1000);  // 每秒更新倒數
+    startAutoSwitch();              // 預設啟用自動切換
+    updateTimer();                  // 初始顯示
   </script>
 </body>
 </html>
