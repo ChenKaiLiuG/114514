@@ -1,43 +1,32 @@
 body {
-  font-family: "Segoe UI", sans-serif;
-  margin: 0;
-  padding: 0;
+  font-family: sans-serif;
   text-align: center;
-  background-color: black;
-  color: #fff;
-  background-image: url('background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 60px;
+  margin: 0;
+  background-color: #111;
+  color: white;
 }
 
 h1 {
+  margin-top: 40px;
   font-size: 36px;
-  margin-bottom: 40px;
-  text-shadow: 2px 2px 8px #000;
 }
 
-.flip-card {
-  width: 320px;
-  height: 320px;
+.card-container {
   perspective: 1000px;
+  width: 400px;
+  height: 400px;
+  margin: 50px auto;
 }
 
-.flip-card-inner {
-  position: relative;
+.card {
   width: 100%;
   height: 100%;
-  transition: transform 0.6s ease;
+  position: relative;
+  transition: transform 1s;
   transform-style: preserve-3d;
 }
 
-.flip-card.show-back .flip-card-inner {
+.card.flip {
   transform: rotateY(180deg);
 }
 
@@ -45,49 +34,38 @@ h1 {
   position: absolute;
   width: 100%;
   height: 100%;
+  backface-visibility: hidden;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+              url('yjsp.jpg') center/cover no-repeat;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  backface-visibility: hidden;
+  font-size: 40px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 .card-face.back {
   transform: rotateY(180deg);
 }
 
-.timer-line {
-  font-size: 32px;
-  color: #fff;
-  text-shadow: 1px 1px 4px black;
-  margin: 10px;
-}
-
 .controls {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
-button.glass-btn {
-  font-size: 20px;
-  padding: 10px 24px;
-  margin: 0 12px;
+button {
+  font-size: 24px;
+  padding: 10px 30px;
+  margin: 0 10px;
   background: rgba(255, 255, 255, 0.2);
+  border: 2px solid #ccc;
+  border-radius: 10px;
   color: #fff;
-  border: none;
-  border-radius: 8px;
-  backdrop-filter: blur(8px);
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  backdrop-filter: blur(4px);
 }
 
-button.glass-btn:hover {
+button:hover {
   background: rgba(255, 255, 255, 0.3);
-}
-
-button.glass-btn:active {
-  transform: scale(0.95);
 }
