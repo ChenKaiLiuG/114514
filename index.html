@@ -11,7 +11,7 @@
       background: #fff;
     }
     .timer {
-      font-size: 72px;
+      font-size: 114px;
       margin: 20px;
     }
     .controls {
@@ -30,7 +30,7 @@
 
   <div class="controls">
     <button onclick="prev()">←</button>
-    <button onclick="toggleAuto()" id="toggleBtn">暫停自動切換</button>
+    <button onclick="toggleAuto()" id="toggleBtn">釘選倒數目標</button>
     <button onclick="next()">→</button>
   </div>
 
@@ -39,8 +39,8 @@
   <script>
     const targets = [
       { label: '114/5/14', time: new Date('2025-05-14T00:00:00+08:00') },
-      { label: '11:45:14', time: new Date('2025-05-14T11:45:14+08:00') },
-      { label: '23:45:14', time: new Date('2025-05-14T23:45:14+08:00') }
+      { label: '上午11:45:14', time: new Date('2025-05-14T11:45:14+08:00') },
+      { label: '下午11:45:14', time: new Date('2025-05-14T23:45:14+08:00') }
     ];
 
     let currentIndex = 0;
@@ -60,7 +60,7 @@
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
         timerEl.textContent = `${label} 還有 ${hours} 小時 ${minutes} 分 ${seconds} 秒`;
       } else {
-        timerEl.textContent = `${label} 時間已到！`;
+        timerEl.textContent = `${label} 哼哼哼～啊啊啊啊啊啊啊啊啊啊啊啊啊～`;
         if (!alarmPlayed[currentIndex]) {
           document.getElementById("alarmSound").play().catch(err => {
             console.log("音訊播放失敗：", err);
