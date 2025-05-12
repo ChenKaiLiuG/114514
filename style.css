@@ -10,6 +10,12 @@ body {
   height: 100vh;
 }
 
+.page-title {
+  color: white;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
 .card-container {
   perspective: 1200px;
   width: 400px;
@@ -40,7 +46,7 @@ body {
   height: 100%;
   background: url('yjsp.jpg') center/cover no-repeat;
   color: white;
-  font-size: 32px;
+  font-size: 26px;
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -51,7 +57,7 @@ body {
   text-align: center;
   padding: 20px;
   box-sizing: border-box;
-  backdrop-filter: brightness(0.8);
+  white-space: pre-line;
 }
 
 .flip-card-back {
@@ -59,11 +65,11 @@ body {
 }
 
 .controls {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .btn {
-  font-size: 20px;
+  font-size: 18px;
   padding: 10px 25px;
   margin: 0 10px;
   background-color: rgba(255,255,255,0.1);
