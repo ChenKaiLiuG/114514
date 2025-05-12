@@ -5,88 +5,95 @@ const targets = [
 ];
 
 let currentIndex = 0;
-let autoSwitch = true;
-let switchIntervalId = null;
+let autoFlip = true;
+let flipTimer = null;
 let alarmPlayed = [false, false, false];
-let isFront = true;
+let flipState = false;
 
-function formatTime(t) {
-  return t.toString().padStart(2, '0');
-}
+const cardFront = document.getElementById('cardContent');
+const cardBack = document.getElementById('cardBackContent');
+const flipCard = document.getElementById('flipCard');
+const flipInner = document.getElementById('flipInner');
 
-function getCountdownText(targetTime, label, index) {
+function formatCountdown(targetTime) {
   const now = new Date();
   const diff = targetTime - now;
   if (diff > 0) {
-    const h = Math.floor(diff / (1000 * 60 * 60));
-    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((diff % (1000 * 60)) / 1000);
-    return `${label}<br>還有 ${formatTime(h)}：${formatTime(m)}：${formatTime(s)}`;
+    const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, '0');
+    const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+    const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+    return `還有 ${hours}：${minutes}：${seconds}`;
   } else {
-    if (!alarmPlayed[index]) {
-      document.getElementById("alarmSound").play().catch(console.error);
-      alarmPlayed[index] = true;
-    }
-    return `${label}<br>哼哼哼～啊啊啊啊啊啊啊啊啊啊啊啊啊～`;
+    return '哼哼哼～啊啊啊啊啊啊啊啊啊啊啊啊啊～';
   }
 }
 
-function updateTimer() {
-  const front = document.getElementById("timer-front");
-  const back = document.getElementById("timer-back");
-  const card = document.getElementById("card");
-  const { time, label } = targets[currentIndex];
-
-  const html = getCountdownText(time, label, currentIndex);
-
-  if (isFront) {
-    back.innerHTML = html;
-    card.classList.add("flip");
+function updateCardContent() {
+  const { label, time } = targets[currentIndex];
+  const content = `${label}\n${formatCountdown(time)}`;
+  if (flipState) {
+    cardBack.textContent = content;
   } else {
-    front.innerHTML = html;
-    card.classList.remove("flip");
+    cardFront.textContent = content;
   }
-  isFront = !isFront;
+
+  // 播放鈴聲
+  const now = new Date();
+  if (now >= time && !alarmPlayed[currentIndex]) {
+    const audio = document.getElementById("alarmSound");
+    audio.play().catch(err => console.log("音訊播放失敗：", err));
+    alarmPlayed[currentIndex] = true;
+  }
 }
 
 function next() {
   currentIndex = (currentIndex + 1) % targets.length;
-  updateTimer();
+  manualFlip();
 }
 
 function prev() {
   currentIndex = (currentIndex - 1 + targets.length) % targets.length;
-  updateTimer();
+  manualFlip();
+}
+
+function manualFlip() {
+  flipState = !flipState;
+  flipCard.classList.toggle('flipped');
+  updateCardContent();
 }
 
 function toggleAuto() {
-  autoSwitch = !autoSwitch;
-  document.getElementById("toggleBtn").textContent = autoSwitch
-    ? "暫停自動切換"
-    : "繼續自動切換";
-  if (autoSwitch) {
-    startAutoSwitch();
+  autoFlip = !autoFlip;
+  const btn = document.getElementById("toggleBtn");
+  btn.textContent = autoFlip ? '暫停自動翻轉' : '繼續自動翻轉';
+  if (autoFlip) {
+    startAutoFlip();
   } else {
-    stopAutoSwitch();
+    stopAutoFlip();
   }
 }
 
-function startAutoSwitch() {
-  if (!switchIntervalId) {
-    switchIntervalId = setInterval(next, 10000);
-  }
+function startAutoFlip() {
+  stopAutoFlip();
+  flipTimer = setInterval(() => {
+    flipState = !flipState;
+    flipCard.classList.toggle('flipped');
+    updateCardContent();
+    currentIndex = (currentIndex + 1) % targets.length;
+  }, 15000);
 }
 
-function stopAutoSwitch() {
-  clearInterval(switchIntervalId);
-  switchIntervalId = null;
+function stopAutoFlip() {
+  clearInterval(flipTimer);
+  flipTimer = null;
 }
 
+setInterval(updateCardContent, 1000); // 每秒更新倒數
+updateCardContent();
+startAutoFlip();
+
+// 啟用音訊播放權限
 document.addEventListener("click", () => {
   const audio = document.getElementById("alarmSound");
   audio.play().then(() => audio.pause());
 }, { once: true });
-
-setInterval(updateTimer, 1000);
-startAutoSwitch();
-updateTimer();
