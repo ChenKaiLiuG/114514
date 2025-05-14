@@ -15,8 +15,8 @@ body {
 .page-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: center;  
+  align-items: center;      
   min-height: 100vh;
   padding: 20px;
   box-sizing: border-box;
@@ -26,16 +26,16 @@ body {
   perspective: 1000px;
   width: 300px;
   height: 300px;
-  margin: 0 auto 30px;
   position: relative;
 }
 
 .flipper {
+  position: relative;
   width: 100%;
   height: 100%;
-  position: relative;
   transform-style: preserve-3d;
   transition: transform 0.8s ease-in-out;
+  transform-origin: center center;
 }
 
 .flip-container.flipped .flipper {
@@ -46,33 +46,40 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  left: 0;
   top: 0;
+  left: 0;
   backface-visibility: hidden;
-  border-radius: 16px;
-  overflow: hidden;
   background-size: cover;
   background-position: center;
+  border-radius: 16px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .card-face.front {
-  transform: rotateY(0deg);
   background-image: url('yjsp.jpg');
+  transform: rotateY(0deg);
 }
 
 .card-face.back {
-  transform: rotateY(180deg);
   background-color: rgba(0, 0, 0, 0.7);
+  transform: rotateY(180deg);
   flex-direction: column;
 }
 
-.overlay-text {
+.card-face h2, .card-face p {
   background: rgba(0, 0, 0, 0.5);
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.overlay-text {
+  background: rgba(0,0,0,0.5);
   padding: 15px 20px;
   border-radius: 12px;
   font-size: 20px;
@@ -88,7 +95,7 @@ body {
 
 .controls button {
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255,255,255,0.3);
   color: white;
   padding: 8px 16px;
   border-radius: 8px;
@@ -98,7 +105,7 @@ body {
 }
 
 .controls button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.2);
 }
 
 .watermark {
