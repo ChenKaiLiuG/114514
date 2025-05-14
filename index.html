@@ -1,0 +1,44 @@
+<!DOCTYPE html> 
+<html lang="zh-TW"> 
+  <head> 
+    <meta charset="UTF-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <meta name="description" content="惡臭計時器首頁，點擊進入倒數頁面。" /> 
+    <meta name="theme-color" content="#1a1a1a" /> 
+    <title>惡臭計時器</title> 
+    <link rel="stylesheet" href="style.css" /> 
+  </head> 
+
+  <body> 
+    <h1 class="page-title">惡臭計時器</h1> 
+    <div class="flip-container" id="flip-card"> 
+      <div class="flipper"> 
+        <div class="front"> 
+          <img src="yjsp.jpg" alt="yjsp" class="card-image" /> 
+        </div> 
+        <div class="back"> 
+          <div class="card-text">
+            <h2>歡迎來到惡臭計時器</h2> 
+            <p>這是一個精心設計的倒數計時器頁面，追蹤特定時間的到來。</p> 
+            <p>按下下方按鈕進入倒數分頁。</p> 
+          </div> 
+        </div> 
+      </div> 
+    </div> 
+    <div class="controls"> 
+      <button onclick="location.href='114514.html'">進入倒數頁面</button> 
+      <button onclick="toggleFlip()">翻轉卡片</button> 
+    </div> 
+    <div class="watermark">@aabbcc</div> 
+    <script> 
+      let flipped = false; 
+      function toggleFlip() { 
+        const card = document.getElementById("flip-card"); 
+        flipped = !flipped; 
+        card.classList.toggle("flipped", flipped); 
+      }  
+      
+      setInterval(toggleFlip, 15000); 
+    </script> 
+  </body> 
+</html>
