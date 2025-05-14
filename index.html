@@ -1,46 +1,43 @@
-<!DOCTYPE html> 
-<html lang="zh-TW"> 
-  <head> 
-    <meta charset="UTF-8" /> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-    <meta name="description" content="惡臭計時器首頁，點擊進入倒數頁面。" /> 
-    <meta name="theme-color" content="#1a1a1a" /> 
-    <title>惡臭計時器</title> 
-    <link rel="stylesheet" href="style.css" /> 
-  </head> 
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="惡臭計時器首頁，翻轉查看介紹並進入倒數頁面。" />
+  <meta name="theme-color" content="#1a1a1a" />
+  <title>惡臭計時器</title>
+  <link rel="stylesheet" href="index_style.css" />
+</head>
 
-  <body> 
-    <h1 class="page-title">惡臭計時器</h1> 
-    <div class="flip-container" id="flip-card"> 
-      <div class="flipper"> 
-        <div class="front card-face" style="background-image: url('yjsp.jpg');"> 
-          <div class="overlay-text">歡迎來到惡臭計時器</div> 
-        </div> 
-        <div class="back card-face" style="background-image: url('yjsp.jpg');"> 
-          <div class="card-text"> 
-            <h2>倒數計時器說明</h2> 
-            <p>這個計時器會倒數至三個指定時間點（114/5/14 的 00:00:00、11:45:14、23:45:14）。</p> 
-            <p>卡片會每 15 秒自動翻轉，亦可手動切換與暫停。</p> 
-            <p>時間到時會播放音效提醒。</p> 
-          </div> 
-        </div> 
-      </div> 
-    </div> 
-    <div class="controls"> 
-      <button onclick="location.href='114514.html'">進入倒數頁面</button> 
-      <button onclick="toggleFlip()">翻轉卡片</button> 
-    </div> 
-    
-    <div class="watermark">Copyright © 2025 ChenKaiLiuG | All Rights Reservedc</div> 
-    <script> 
-      let flipped = false; 
-      function toggleFlip() { 
-        const card = document.getElementById("flip-card"); 
-        flipped = !flipped; 
-        card.classList.toggle("flipped", flipped); 
-      }  
-      
-      setInterval(toggleFlip, 15000); 
-    </script> 
-  </body> 
+<body>
+  <h1 class="page-title">惡臭計時器</h1>
+
+  <div class="flip-container" id="flip-card">
+    <div class="flipper">
+      <div class="card-face front">
+        <div class="overlay-text">歡迎來到惡臭計時器</div>
+      </div>
+      <div class="card-face back">
+        <h2>說明</h2>
+        <p>這是一個會在 114/5/14 的 0:00、11:45、23:45 倒數的惡臭計時器。</p>
+        <p>每 15 秒自動翻轉，也可以手動控制，時間到會播放提示音。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="location.href='114514.html'">←</button>
+    <button onclick="toggleFlip()">翻轉卡片</button>
+    <button onclick="location.href='114514.html'">→</button>
+  </div>
+
+  <div class="watermark">@aabbcc</div>
+
+  <script>
+    function toggleFlip() {
+      const card = document.getElementById("flip-card");
+      card.classList.toggle("flipped");
+    }
+  </script>
+</body>
 </html>
