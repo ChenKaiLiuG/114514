@@ -13,14 +13,15 @@
     <h1 class="page-title">惡臭計時器</h1> 
     <div class="flip-container" id="flip-card"> 
       <div class="flipper"> 
-        <div class="front"> 
-          <img src="yjsp.jpg" alt="yjsp" class="card-image" /> 
+        <div class="front card-face" style="background-image: url('yjsp.jpg');"> 
+          <div class="overlay-text">歡迎來到惡臭計時器</div> 
         </div> 
-        <div class="back"> 
-          <div class="card-text">
-            <h2>歡迎來到惡臭計時器</h2> 
-            <p>這是一個精心設計的倒數計時器頁面，追蹤特定時間的到來。</p> 
-            <p>按下下方按鈕進入倒數分頁。</p> 
+        <div class="back card-face" style="background-image: url('yjsp.jpg');"> 
+          <div class="card-text"> 
+            <h2>倒數計時器說明</h2> 
+            <p>這個計時器會倒數至三個指定時間點（114/5/14 的 00:00:00、11:45:14、23:45:14）。</p> 
+            <p>卡片會每 15 秒自動翻轉，亦可手動切換與暫停。</p> 
+            <p>時間到時會播放音效提醒。</p> 
           </div> 
         </div> 
       </div> 
@@ -29,6 +30,7 @@
       <button onclick="location.href='114514.html'">進入倒數頁面</button> 
       <button onclick="toggleFlip()">翻轉卡片</button> 
     </div> 
+    
     <div class="watermark">Copyright © 2025 ChenKaiLiuG | All Rights Reservedc</div> 
     <script> 
       let flipped = false; 
