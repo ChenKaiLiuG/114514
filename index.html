@@ -3,12 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="惡臭計時器首頁，翻轉查看介紹並進入倒數頁面。" />
-  <meta name="theme-color" content="#1a1a1a" />
   <title>惡臭計時器</title>
   <link rel="stylesheet" href="index_style.css" />
 </head>
-
 <body>
   <div class="page-wrapper">
     <h1 class="page-title">惡臭計時器</h1>
@@ -37,8 +34,7 @@
 
   <script>
     function toggleFlip() {
-      const card = document.getElementById("flip-card");
-      card.classList.toggle("flipped");
+      document.getElementById("flip-card").classList.toggle("flipped");
     }
   </script>
 </body>
