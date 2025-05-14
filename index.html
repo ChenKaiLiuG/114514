@@ -10,25 +10,27 @@
 </head>
 
 <body>
-  <h1 class="page-title">惡臭計時器</h1>
+  <div class="page-wrapper">
+    <h1 class="page-title">惡臭計時器</h1>
 
-  <div class="flip-container" id="flip-card">
-    <div class="flipper">
-      <div class="card-face front">
-        <div class="overlay-text">歡迎來到惡臭計時器</div>
-      </div>
-      <div class="card-face back">
-        <h2>說明</h2>
-        <p>這是一個會在 114/5/14 的 0:00、11:45、23:45 倒數的惡臭計時器。</p>
-        <p>每 15 秒自動翻轉，也可以手動控制，時間到會播放提示音。</p>
+    <div class="flip-container" id="flip-card">
+      <div class="flipper">
+        <div class="card-face front">
+          <div class="overlay-text">歡迎來到惡臭計時器</div>
+        </div>
+        <div class="card-face back">
+          <h2>說明</h2>
+          <p>這是一個會在 114/5/14 的 0:00、11:45、23:45 倒數的惡臭計時器。</p>
+          <p>每 15 秒自動翻轉，也可以手動控制，時間到會播放提示音。</p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="controls">
-    <button onclick="location.href='114514.html'">←</button>
-    <button onclick="toggleFlip()">翻轉卡片</button>
-    <button onclick="location.href='114514.html'">→</button>
+    <div class="controls">
+      <button onclick="location.href='114514.html'">←</button>
+      <button onclick="toggleFlip()">翻轉卡片</button>
+      <button onclick="location.href='114514.html'">→</button>
+    </div>
   </div>
 
   <div class="watermark">@aabbcc</div>
