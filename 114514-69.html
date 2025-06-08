@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="惡臭時間倒數器 - 可自動翻轉並播放提醒音效的倒數卡片" />
+  <meta name="theme-color" content="#1a1a1a" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="author" content="ChenKaiLiuG" />
+  <meta name="keywords" content="倒數計時, 時間卡片, 自動翻轉, 倒數器, 惡臭時間" />
+  <title>惡臭時間倒數器</title>
+  <link rel="stylesheet" href="counter_style.css">
+</head>
+<body>
+  <h1 class="page-title">惡臭時間倒數器</h1>
+
+  <div class="card-container">
+    <div class="flip-card" id="flipCard">
+      <div class="flip-card-inner" id="flipInner">
+        <div class="flip-card-front card" id="cardContent">載入中...</div>
+        <div class="flip-card-back card" id="cardBackContent">載入中...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn" onclick="prev()">←</button>
+    <button class="btn" onclick="toggleAuto()" id="toggleBtn">暫停自動翻轉</button>
+    <button class="btn" onclick="next()">→</button>
+  </div>
+
+  <audio id="alarmSound" src="ring.webm" preload="auto"></audio>
+  <script src="script.js"></script>
+  <div class="watermark">Copyright © 2025 ChenKaiLiuG | All Rights Reserved</div>
+</body>
+</html>
