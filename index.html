@@ -95,7 +95,20 @@
     .controls button:hover {
       background: rgba(255,255,255,0.2);
     }
+    
+    .card-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
 
+    @media (max-width: 768px) {
+      .card-wrapper {
+        flex-direction: column;
+    }
+      
     .watermark {
       position: fixed;
       bottom: 10px;
@@ -108,20 +121,43 @@
 <body>
   <h1 class="page-title">惡臭計時器</h1>
 
-  <div class="flip-container" id="flip-card">
+  <div class="card-wrapper">
+    <div class="flip-container" id="flip-card-114514">
+      <div class="flipper">
+        <div class="card-face front">
+          <div class="overlay-text">
+          歡迎來到114/5/14的<br>
+          惡臭時間倒數器<br>
+          [存檔模式]
+          </div>
+        </div>
+      
+        <div class="card-face back">
+          <h2>說明</h2>
+          <p>這是一個會在 114/5/14 的 00:00、上午11:45:14、下午11:45:14 播放先輩淒厲的叫聲。</p>
+          <p>每 15 秒自動翻轉，也可以手動控制。</p>
+          <p>（因為神聖的日子已經過了，所以現在是存檔模式）</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-container" id="flip-card-2">
     <div class="flipper">
       <div class="card-face front">
-        <div class="overlay-text">歡迎來到惡臭時間倒數器</div>
+        <div class="overlay-text">
+          歡迎來到114/5/14 (農曆) 的<br>
+          惡臭時間倒數器
+        </div>
       </div>
       <div class="card-face back">
         <h2>說明</h2>
-        <p>這是一個會在 114/5/14 的 00:00、上午11:45:14、下午11:45:14 播放先輩淒厲的叫聲。</p>
+        <p>這是一個會在農曆 114/5/14 的 00:00、上午11:45:14、下午11:45:14和下午19:19:8.10 播放先輩淒厲的叫聲。</p>
         <p>每 15 秒自動翻轉，也可以手動控制。</p>
-        <p>（因為神聖的日子已經過了，所以現在是存檔模式）</p>
       </div>
     </div>
   </div>
-
+</div>
+  
   <div class="controls">
     <!-- <button onclick="location.href='114514.html'">←</button> -->
     <button onclick="toggleFlip()">翻轉卡片</button>
