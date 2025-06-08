@@ -114,22 +114,25 @@
       margin-top: 10px;
     }
     
-    @media (max-width: 768px) {
-      .card-wrapper {
-        flex-direction: column;
-    }
-      
     .watermark {
       position: fixed;
       bottom: 10px;
       right: 20px;
       font-size: 12px;
       opacity: 0.3;
+      color: rgba(255, 255, 255, 0.6);
       z-index: 1000;
       pointer-events: none;
     }
+    
+    @media (max-width: 768px) {
+      .card-wrapper {
+        flex-direction: column;
+    }
+    
   </style>
 </head>
+
 <body>
   <h1 class="page-title">惡臭計時器</h1>
 
@@ -148,9 +151,14 @@
       
           <div class="card-face back">
             <h2>說明</h2>
-            <p>這是一個會在 114/5/14 的 00:00、上午11:45:14、下午11:45:14 播放先輩淒厲的叫聲。</p>
-            <p>每 15 秒自動翻轉，也可以手動控制。</p>
-            <p>（因為神聖的日子已經過了，所以現在是存檔模式）</p>
+            <p>這是一個會在</p>
+            <p>114/5/14 的 00:00、上午11:45:14、下午11:45:14 </p>
+            <p>播放先輩淒厲叫聲的計時器。</p>
+            <p></p>
+            <p>每 15 秒自動翻轉，也能手動控制。</p>
+            <p></p>
+            <p>（因為神聖的日子已經過了，</p>
+            <p>所以現在是存檔模式）</p>
           </div>
         </div>
       </div>
@@ -174,7 +182,12 @@
           </div>
           <div class="card-face back">
             <h2>說明</h2>
-            <p>這是一個會在農曆 114/5/14 的 00:00、上午11:45:14、下午11:45:14和下午19:19:8.10 播放先輩淒厲的叫聲。</p>
+            <p>這是一個會在農曆</p>
+            <p>114/5/14（國曆114/6/9）的 00:00、</p>
+            <p>上午11:45:14、下午11:45:14</p>
+            <p>和下午19:19:8.10</p>
+            <p>播放先輩淒厲叫聲的計時器。</p>
+            <p></p>
             <p>每 15 秒自動翻轉，也可以手動控制。</p>
           </div>
         </div>
